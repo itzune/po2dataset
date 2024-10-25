@@ -1,6 +1,25 @@
 # CHANGELOG
 
 
+## v0.3.1 (2024-10-25)
+
+### Features
+
+* feat: add readme function implemented + test for this function ([`35c27d5`](https://github.com/itzune/po2dataset/commit/35c27d5166b0c2b567754a3c0cd35655645ebbf6))
+
+### Unknown
+
+* Merge pull request #23 from itzune/dev
+
+Documentation + Option to add custom README file into a project ([`25c77cf`](https://github.com/itzune/po2dataset/commit/25c77cfcac05b0b1a081f37dc2bc234d77d8cc61))
+
+* add: more information with use cases in README ([`f48920f`](https://github.com/itzune/po2dataset/commit/f48920faa585127e8c5d768d779b7a539aacd7f0))
+
+* Test README file added ([`fc753e3`](https://github.com/itzune/po2dataset/commit/fc753e39c836bf7eab28deecb77d506de6860473))
+
+* Add: Changelog path added to pyproject.toml ([`7b5dc18`](https://github.com/itzune/po2dataset/commit/7b5dc1846f2e1b790e7cbc804d01ad804936c099))
+
+
 ## v0.3.0 (2024-10-22)
 
 ### Build System
