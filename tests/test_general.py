@@ -101,3 +101,5 @@ class TestStringMethods(unittest.TestCase):
         )
         add_readme(self.path, TEST_DATA["readme_path"])
         self.assertPathExists(self.path + "/README.md")
+        with open(self.path + "/README.md", "r") as readme_file:
+            self.assertEqual(readme_file.read(), "# THIS IS A TEST README FILE\n")

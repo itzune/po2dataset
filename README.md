@@ -21,7 +21,7 @@ pip install po2dataset
 Create a virtual environment using [virtualenv](https://virtualenv.pypa.io/en/latest/index.html)
 
 ```bash
-git clone https://github.com/urtzai/po2dataset.git
+git clone https://github.com/itzune/po2dataset.git
 virtualenv po2dataset
 cd po2dataset
 source ./bin/activate
@@ -32,7 +32,7 @@ source ./bin/activate
 ### Create Argos Train suitable dataset
 
 ```bash
-po2dataset <path_to_po_file> --name <project_name> --source_code <source_lang_code> --target_code <target_lang_code> --ref "Some reference information of the project"
+po2dataset path/to/yourfile.po --name "MyProject" --source_code en --target_code eu --ref "Some reference information of the project"
 ```
 
 Where:
@@ -59,13 +59,13 @@ po2dataset path/to/yourfile.po --name "MyProject" --source_code en --target_code
 
 #### Specifying Format and License
 
-For custom file format and license, use:
+For different file format and license, use:
 
 ```bash
-po2dataset path/to/yourfile.po --name "MyProject" --source_code en --target_code eu --format "customzip" --license "CC-BY"
+po2dataset path/to/yourfile.po --name "MyProject" --source_code en --target_code eu --format "zip" --license "CC-BY"
 ```
 
-These commands create language dataset packages, with customizable file formats and licensing options.
+These commands create language dataset packages, with zip file format and CC-BY licensing options.
 
 ## Support
 

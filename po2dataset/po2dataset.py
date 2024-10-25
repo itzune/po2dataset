@@ -2,11 +2,11 @@
 
 import os
 import sys
-import polib
-import argparse
 import json
 import zipfile
 import shutil
+import polib
+import argparse
 import requests
 
 DEFAULT_FORMAT = "argosdata"
@@ -19,6 +19,31 @@ LICENSE_MAPPING = {
     "CC-BY-SA": "https://creativecommons.org/licenses/by-sa/4.0/legalcode.txt",
 }
 LICENSE_CHOICES = [key for key, value in LICENSE_MAPPING.items()]
+
+COMMON_PLACEHOLDERS = [
+    "%@",
+    "%s",
+    "%d",
+    "%f",
+    "%1$s",
+    "%1$d",
+    "%2$s",
+    "%2$d",
+    "%3$s",
+    "%3$d",
+    "%4$s",
+    "%4$d",
+    "%number%",
+    "%(amount)",
+    "%{any_string_without_whitespaces}",
+    "{any_string_without_whitespaces}",
+    "{{amount}}",
+]
+DEFAULT_PLACEHOLDER_POLICY = "skip"
+PLACEHOLDER_POLICIES = [
+    DEFAULT_PLACEHOLDER_POLICY,  # Skips all strings containing placeholders in order to add to the final project
+    "remove",  # Removes all placeholders from strings and adds those strings to the final project
+]
 
 
 def create_workdir(output, name, source_code, target_code):
