@@ -45,7 +45,27 @@ Where:
 Optional arguments:
 
 - `format`: Extension name of the zip file (default **argosdata**)
-- `license`: License to add into the package (default [**CC0**](https://creativecommons.org/publicdomain/zero/1.0/))
+- `license`: License to add into the package (default [**CC0**](https://creativecommons.org/publicdomain/zero/1.0/)). Options are: CC0, CC-BY, CC-BY-SA
+
+### Usage Examples
+
+#### Basic Dataset Creation
+
+To create a dataset from a .po file for an English-Basque translation project, run:
+
+```bash
+po2dataset path/to/yourfile.po --name "MyProject" --source_code en --target_code eu --ref "Translation dataset for project X"
+```
+
+#### Specifying Format and License
+
+For custom file format and license, use:
+
+```bash
+po2dataset path/to/yourfile.po --name "MyProject" --source_code en --target_code eu --format "customzip" --license "CC-BY"
+```
+
+These commands create language dataset packages, with customizable file formats and licensing options.
 
 ## Support
 

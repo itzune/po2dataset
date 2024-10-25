@@ -80,6 +80,16 @@ def add_license(output, license=DEFAULT_LICENSE):
         print("Couldn't retrieve the license due to connection issues")
 
 
+def add_readme(output, readme_path=None):
+    if readme_path:
+        print("Adding {} license to the package...".format(readme_path))
+        basename = os.path.basename(readme_path)
+        readme_output = os.path.join(output, basename)
+        shutil.copyfile(readme_path, readme_output)
+    else:
+        print("Couldn't retrieve the README file")
+
+
 def make_zip(output, format=DEFAULT_FORMAT):
     print("Creating {} file in {}".format(format, output))
     zip_path = "{}.{}".format(output, format)
@@ -131,6 +141,14 @@ def main():
         help="License file to be included in the package (select choice or provide custom file path)",
     )
 
+    parser.add_argument(
+        "-re",
+        "--readme",
+        type=str,
+        required=False,
+        help="Original README file to copy from",
+    )
+
     args = parser.parse_args()
 
     output = args.output or ""
@@ -147,6 +165,8 @@ def main():
 
     license = args.license or DEFAULT_LICENSE
     add_license(output, license)
+
+    add_readme(output, args.readme)
 
     format = args.format or DEFAULT_FORMAT
     make_zip(output, format)

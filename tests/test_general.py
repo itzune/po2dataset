@@ -2,7 +2,12 @@ import unittest
 import os
 import shutil
 import json
-from po2dataset.po2dataset import create_workdir, create_dataset, create_metadata
+from po2dataset.po2dataset import (
+    create_workdir,
+    create_dataset,
+    create_metadata,
+    add_readme,
+)
 
 
 TEST_BASE_PATH = ""
@@ -14,6 +19,7 @@ TEST_DATA = {
     "target_code": "eu",
     "ref": "Some ref here",
     "po_file_path": "./tests/data/test_data.po",
+    "readme_path": "./tests/data/README.md",
     "size": 2,
 }
 TEST_META = {
@@ -85,3 +91,13 @@ class TestStringMethods(unittest.TestCase):
         self.assertPathExists(self.path + "/metadata.json")
         with open(self.path + "/metadata.json", "r") as meta_file:
             self.assertEqual(json.loads(meta_file.read()), TEST_META)
+
+    def test_readme(self):
+        self.path = create_workdir(
+            TEST_BASE_PATH,
+            TEST_DATA["name"],
+            TEST_DATA["source_code"],
+            TEST_DATA["target_code"],
+        )
+        add_readme(self.path, TEST_DATA["readme_path"])
+        self.assertPathExists(self.path + "/README.md")
