@@ -43,7 +43,7 @@ Homepage = "https://github.com/urtzai/po2dataset"
 Documentation = "https://github.com/urtzai/po2dataset/blob/main/README.md"
 Repository = "https://github.com/urtzai/po2dataset"
 "Bug Tracker" = "https://github.com/urtzai/po2dataset/issues"
-# Changelog = "https://github.com/me/spam/blob/master/CHANGELOG.md"
+Changelog = "https://github.com/urtzai/po2dataset/blob/main/CHANGELOG.md"
 
 [tool.semantic_release]
 assets = []
