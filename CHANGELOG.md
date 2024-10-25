@@ -1,6 +1,27 @@
 # CHANGELOG
 
 
+## v0.4.0 (2024-10-25)
+
+### Fixes
+
+* fix: README needs corrections ([`3a9b93d`](https://github.com/itzune/po2dataset/commit/3a9b93d383a3a4828732d9678d4505176f85029b))
+
+### Refactoring
+
+* refactor: reorder imports + add some placeholder definitions ([`5f7a46f`](https://github.com/itzune/po2dataset/commit/5f7a46ff180310051f5202cda8891901a0e74821))
+
+### Testing
+
+* test: add more test assets to the readme test ([`0180d17`](https://github.com/itzune/po2dataset/commit/0180d17296e9578a8cf91e94e7456446d50d2db2))
+
+### Unknown
+
+* Merge pull request #24 from itzune/dev
+
+Some fix and tests ([`bd9f89e`](https://github.com/itzune/po2dataset/commit/bd9f89eb88b4860ca22414bba3440628363ffd10))
+
+
 ## v0.3.1 (2024-10-25)
 
 ### Features
