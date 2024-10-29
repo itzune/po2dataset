@@ -20,7 +20,7 @@ TEST_DATA = {
     "ref": "Some ref here",
     "po_file_path": "./tests/data/test_data.po",
     "readme_path": "./tests/data/README.md",
-    "size": 2,
+    "size": 10,
 }
 TEST_META = {
     "name": TEST_DATA["name"],
@@ -70,7 +70,7 @@ class TestStringMethods(unittest.TestCase):
         with open(self.path + "/target", "r") as target:
             for i, line in enumerate(target):
                 self.assertEqual(line, target_data_lines[i])
-        self.assertEqual(total_strings, 2)
+        self.assertEqual(total_strings, TEST_DATA["size"])
 
     def test_metadata(self):
         self.path = create_workdir(
