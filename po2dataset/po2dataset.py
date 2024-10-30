@@ -22,10 +22,10 @@ LICENSE_MAPPING = {
 LICENSE_CHOICES = [key for key, value in LICENSE_MAPPING.items()]
 
 COMMON_PLACEHOLDERS = [
-    "\s*%[@sdf]",  # %@ %s %d and %f
-    "\s*%\w+%",  # %number%
-    "\s*%[\{\(]\w+[\}\)]",  # %(amount) and %{amount}
-    "\s*[^%]\{{1,2}\w+\}{1,2}",  # {amount} and {{amount}}
+    r"\s*%[@sdf]",  # %@ %s %d and %f
+    r"\s*%\w+%",  # %number%
+    r"\s*%[\{\()]\w+[\}\)]",  # %{amount} and  %(amount)
+    r"\s*[^%]\{{1,2}\w+\}{1,2}",  # {amount} and {{amount}}
     # "%1$s",
     # "%1$d",
     # "%2$s",
@@ -70,11 +70,12 @@ def find_placeholder(txt):
 def create_dataset(path, output, ph_policy="skip"):
     pofile = polib.pofile(path)
     total_strings = len(pofile)
-    strings = len(pofile.translated_entries())
-    print("{} from {} strings to process".format(strings, total_strings))
+    translated_strings = len(pofile.translated_entries())
+    print("{} from {} strings to process".format(translated_strings, total_strings))
 
     f_source = open("{}/source".format(output), "w")
     f_target = open("{}/target".format(output), "w")
+    procesed_strings = 0
     for i, entry in enumerate(pofile.translated_entries(), 1):
         msgid = entry.msgid
         msgstr = entry.msgstr
@@ -82,18 +83,23 @@ def create_dataset(path, output, ph_policy="skip"):
             continue
         elif ph_policy == "remove":
             ph = find_placeholder(msgid)
-            if ph:
-                msgid = re.sub(ph.group(), "", msgid)
-                msgstr = re.sub(ph.group(), "", msgstr)
+            while ph:
+                msgid = msgid.replace(ph.group(), "")
+                ph = find_placeholder(msgid)
+            ph = find_placeholder(msgstr)
+            while ph:
+                msgstr = msgstr.replace(ph.group(), "")
+                ph = find_placeholder(msgstr)
 
         print(msgid, file=f_source)
         print(msgstr, file=f_target)
-        process = (i / strings) * 100
+        process = (i / translated_strings) * 100
         print("%{:.0f} completed...".format(process), end="\r")
+        procesed_strings += 1
     f_source.close()
     f_target.close()
     print("\n")
-    return strings
+    return procesed_strings
 
 
 def create_metadata(output, name, source_code, target_code, ref, total_strings):
@@ -206,13 +212,9 @@ def main():
 
     output = create_workdir(output, args.name, args.source_code, args.target_code)
 
-    import pdb
-
-    pdb.set_trace()
-
-    total_strings = create_dataset(args.path, output, args.ph_policy)
+    string_count = create_dataset(args.path, output, args.ph_policy)
     create_metadata(
-        output, args.name, args.source_code, args.target_code, args.ref, total_strings
+        output, args.name, args.source_code, args.target_code, args.ref, string_count
     )
 
     license = args.license or DEFAULT_LICENSE
