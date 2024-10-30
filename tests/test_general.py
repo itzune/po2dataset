@@ -13,6 +13,54 @@ from po2dataset.po2dataset import (
 TEST_BASE_PATH = ""
 source_data_lines = ["Hellow World!\n", "This is a test po file\n"]
 target_data_lines = ["Kaixo Mundua!\n", "Hau testerako po fitxategia da\n"]
+all_source_data_lines = [
+    "Hellow World!\n",
+    "This is a test po file\n",
+    "Lets see if we can detect the %@ placeholder\n",
+    "Lets see if we can detect the %s placeholder\n",
+    "Lets see if we can detect the %d placeholder\n",
+    "Lets see if we can detect the %number% placeholder\n",
+    "Lets see if we can detect the %(amount) placeholder\n",
+    "Lets see if we can detect the %{amount} placeholder\n",
+    "Lets see if we can detect the {amount} placeholder\n",
+    "Lets see if we can detect the {{amount}} placeholder\n",
+]
+all_target_data_lines = [
+    "Kaixo Mundua!\n",
+    "Hau testerako po fitxategia da\n",
+    "Ikus dezagun %@ aldagaia detekta dezakegun\n",
+    "Ikus dezagun %s aldagaia detekta dezakegun\n",
+    "Ikus dezagun %d aldagaia detekta dezakegun\n",
+    "Ikus dezagun %number% aldagaia detekta dezakegun\n",
+    "Ikus dezagun %(amount) aldagaia detekta dezakegun\n",
+    "Ikus dezagun %{amount} aldagaia detekta dezakegun\n",
+    "Ikus dezagun {amount} aldagaia detekta dezakegun\n",
+    "Ikus dezagun {{amount}} aldagaia detekta dezakegun\n",
+]
+removed_source_data_lines = [
+    "Hellow World!\n",
+    "This is a test po file\n",
+    "Lets see if we can detect the placeholder\n",
+    "Lets see if we can detect the placeholder\n",
+    "Lets see if we can detect the placeholder\n",
+    "Lets see if we can detect the placeholder\n",
+    "Lets see if we can detect the placeholder\n",
+    "Lets see if we can detect the placeholder\n",
+    "Lets see if we can detect the placeholder\n",
+    "Lets see if we can detect the placeholder\n",
+]
+removed_target_data_lines = [
+    "Kaixo Mundua!\n",
+    "Hau testerako po fitxategia da\n",
+    "Ikus dezagun aldagaia detekta dezakegun\n",
+    "Ikus dezagun aldagaia detekta dezakegun\n",
+    "Ikus dezagun aldagaia detekta dezakegun\n",
+    "Ikus dezagun aldagaia detekta dezakegun\n",
+    "Ikus dezagun aldagaia detekta dezakegun\n",
+    "Ikus dezagun aldagaia detekta dezakegun\n",
+    "Ikus dezagun aldagaia detekta dezakegun\n",
+    "Ikus dezagun aldagaia detekta dezakegun\n",
+]
 TEST_DATA = {
     "name": "test",
     "source_code": "en",
@@ -61,7 +109,7 @@ class TestStringMethods(unittest.TestCase):
             TEST_DATA["source_code"],
             TEST_DATA["target_code"],
         )
-        total_strings = create_dataset(TEST_DATA["po_file_path"], self.path)
+        string_count = create_dataset(TEST_DATA["po_file_path"], self.path)
         self.assertPathExists(self.path + "/source")
         self.assertPathExists(self.path + "/target")
         with open(self.path + "/source", "r") as source:
@@ -70,7 +118,43 @@ class TestStringMethods(unittest.TestCase):
         with open(self.path + "/target", "r") as target:
             for i, line in enumerate(target):
                 self.assertEqual(line, target_data_lines[i])
-        self.assertEqual(total_strings, 2)
+        self.assertEqual(string_count, 2)
+
+    def test_dataset_do_nothing(self):
+        self.path = create_workdir(
+            TEST_BASE_PATH,
+            TEST_DATA["name"],
+            TEST_DATA["source_code"],
+            TEST_DATA["target_code"],
+        )
+        string_count = create_dataset(
+            TEST_DATA["po_file_path"], self.path, ph_policy="do_nothing"
+        )
+        with open(self.path + "/source", "r") as source:
+            for i, line in enumerate(source):
+                self.assertEqual(line, all_source_data_lines[i])
+        with open(self.path + "/target", "r") as target:
+            for i, line in enumerate(target):
+                self.assertEqual(line, all_target_data_lines[i])
+        self.assertEqual(string_count, 10)
+
+    def test_dataset_remove(self):
+        self.path = create_workdir(
+            TEST_BASE_PATH,
+            TEST_DATA["name"],
+            TEST_DATA["source_code"],
+            TEST_DATA["target_code"],
+        )
+        string_count = create_dataset(
+            TEST_DATA["po_file_path"], self.path, ph_policy="remove"
+        )
+        with open(self.path + "/source", "r") as source:
+            for i, line in enumerate(source):
+                self.assertEqual(line, removed_source_data_lines[i])
+        with open(self.path + "/target", "r") as target:
+            for i, line in enumerate(target):
+                self.assertEqual(line, removed_target_data_lines[i])
+        self.assertEqual(string_count, 10)
 
     def test_metadata(self):
         self.path = create_workdir(
@@ -79,14 +163,14 @@ class TestStringMethods(unittest.TestCase):
             TEST_DATA["source_code"],
             TEST_DATA["target_code"],
         )
-        total_strings = create_dataset(TEST_DATA["po_file_path"], self.path)
+        string_count = create_dataset(TEST_DATA["po_file_path"], self.path)
         create_metadata(
             self.path,
             TEST_DATA["name"],
             TEST_DATA["source_code"],
             TEST_DATA["target_code"],
             TEST_DATA["ref"],
-            total_strings,
+            string_count,
         )
         self.assertPathExists(self.path + "/metadata.json")
         with open(self.path + "/metadata.json", "r") as meta_file:

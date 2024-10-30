@@ -16,3 +16,27 @@ msgstr "Kaixo Mundua!"
 
 msgid "This is a test po file"
 msgstr "Hau testerako po fitxategia da"
+
+msgid "Lets see if we can detect the %@ placeholder"
+msgstr "Ikus dezagun %@ aldagaia detekta dezakegun"
+
+msgid "Lets see if we can detect the %s placeholder"
+msgstr "Ikus dezagun %s aldagaia detekta dezakegun"
+
+msgid "Lets see if we can detect the %d placeholder"
+msgstr "Ikus dezagun %d aldagaia detekta dezakegun"
+
+msgid "Lets see if we can detect the %number% placeholder"
+msgstr "Ikus dezagun %number% aldagaia detekta dezakegun"
+
+msgid "Lets see if we can detect the %(amount) placeholder"
+msgstr "Ikus dezagun %(amount) aldagaia detekta dezakegun"
+
+msgid "Lets see if we can detect the %{amount} placeholder"
+msgstr "Ikus dezagun %{amount} aldagaia detekta dezakegun"
+
+msgid "Lets see if we can detect the {amount} placeholder"
+msgstr "Ikus dezagun {amount} aldagaia detekta dezakegun"
+
+msgid "Lets see if we can detect the {{amount}} placeholder"
+msgstr "Ikus dezagun {{amount}} aldagaia detekta dezakegun"

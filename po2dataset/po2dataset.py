@@ -2,6 +2,7 @@
 
 import os
 import sys
+import re
 import json
 import zipfile
 import shutil
@@ -21,28 +22,24 @@ LICENSE_MAPPING = {
 LICENSE_CHOICES = [key for key, value in LICENSE_MAPPING.items()]
 
 COMMON_PLACEHOLDERS = [
-    "%@",
-    "%s",
-    "%d",
-    "%f",
-    "%1$s",
-    "%1$d",
-    "%2$s",
-    "%2$d",
-    "%3$s",
-    "%3$d",
-    "%4$s",
-    "%4$d",
-    "%number%",
-    "%(amount)",
-    "%{any_string_without_whitespaces}",
-    "{any_string_without_whitespaces}",
-    "{{amount}}",
+    r"\s*%[@sdf]",  # %@ %s %d and %f
+    r"\s*%\w+%",  # %number%
+    r"\s*%[\{\()]\w+[\}\)]",  # %{amount} and  %(amount)
+    r"\s*[^%]\{{1,2}\w+\}{1,2}",  # {amount} and {{amount}}
+    # "%1$s",
+    # "%1$d",
+    # "%2$s",
+    # "%2$d",
+    # "%3$s",
+    # "%3$d",
+    # "%4$s",
+    # "%4$d",
 ]
 DEFAULT_PLACEHOLDER_POLICY = "skip"
 PLACEHOLDER_POLICIES = [
     DEFAULT_PLACEHOLDER_POLICY,  # Skips all strings containing placeholders in order to add to the final project
     "remove",  # Removes all placeholders from strings and adds those strings to the final project
+    "do_nothing",
 ]
 
 
@@ -62,24 +59,47 @@ def create_workdir(output, name, source_code, target_code):
         sys.exit()
 
 
-def create_dataset(path, output):
+def find_placeholder(txt):
+    for ph in COMMON_PLACEHOLDERS:
+        x = re.search(ph, txt)
+        if x:
+            return x
+    return False
+
+
+def create_dataset(path, output, ph_policy="skip"):
     pofile = polib.pofile(path)
     total_strings = len(pofile)
-    strings = len(pofile.translated_entries())
-    print("{} from {} strings to process".format(strings, total_strings))
+    translated_strings = len(pofile.translated_entries())
+    print("{} from {} strings to process".format(translated_strings, total_strings))
 
     f_source = open("{}/source".format(output), "w")
     f_target = open("{}/target".format(output), "w")
+    procesed_strings = 0
     for i, entry in enumerate(pofile.translated_entries(), 1):
-        print(entry.msgid, file=f_source)
-        print(entry.msgstr, file=f_target)
+        msgid = entry.msgid
+        msgstr = entry.msgstr
+        if ph_policy == "skip" and find_placeholder(msgid):
+            continue
+        elif ph_policy == "remove":
+            ph = find_placeholder(msgid)
+            while ph:
+                msgid = msgid.replace(ph.group(), "")
+                ph = find_placeholder(msgid)
+            ph = find_placeholder(msgstr)
+            while ph:
+                msgstr = msgstr.replace(ph.group(), "")
+                ph = find_placeholder(msgstr)
 
-        process = (i / strings) * 100
+        print(msgid, file=f_source)
+        print(msgstr, file=f_target)
+        process = (i / translated_strings) * 100
         print("%{:.0f} completed...".format(process), end="\r")
+        procesed_strings += 1
     f_source.close()
     f_target.close()
     print("\n")
-    return strings
+    return procesed_strings
 
 
 def create_metadata(output, name, source_code, target_code, ref, total_strings):
@@ -174,6 +194,15 @@ def main():
         help="Original README file to copy from",
     )
 
+    parser.add_argument(
+        "-ph",
+        "--ph-policy",
+        type=str,
+        choices=PLACEHOLDER_POLICIES,
+        required=False,
+        help="Policy to substract or skip placeholders in strings",
+    )
+
     args = parser.parse_args()
 
     output = args.output or ""
@@ -183,9 +212,9 @@ def main():
 
     output = create_workdir(output, args.name, args.source_code, args.target_code)
 
-    total_strings = create_dataset(args.path, output)
+    string_count = create_dataset(args.path, output, args.ph_policy)
     create_metadata(
-        output, args.name, args.source_code, args.target_code, args.ref, total_strings
+        output, args.name, args.source_code, args.target_code, args.ref, string_count
     )
 
     license = args.license or DEFAULT_LICENSE
