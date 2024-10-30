@@ -1,6 +1,23 @@
 # CHANGELOG
 
 
+## v0.5.0 (2024-10-30)
+
+### Features
+
+* feat: implement string placeholders algorithms ([`fbf298b`](https://github.com/itzune/po2dataset/commit/fbf298b3767ea2c7f1f42b606aa2a231608485b8))
+
+### Fixes
+
+* fix: Properly remove all placeholders from strings when using 'remove' placeholder policy ([`497940e`](https://github.com/itzune/po2dataset/commit/497940e1b8882b6f435e0c900679318f10ce7713))
+
+### Unknown
+
+* Merge pull request #25 from itzune/dev
+
+String placeholder algorithms ([`5b1430e`](https://github.com/itzune/po2dataset/commit/5b1430e3f592c530d9a32cf662a537286573a62d))
+
+
 ## v0.4.0 (2024-10-25)
 
 ### Fixes
