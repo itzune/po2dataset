@@ -1,6 +1,21 @@
 # CHANGELOG
 
 
+## v0.5.1 (2024-10-31)
+
+### Features
+
+* feat: Feature to collect and process multiple po files from folders + command verbose incremented ([`67fb937`](https://github.com/itzune/po2dataset/commit/67fb9370163c7ffeed4fc9df74b69ac2024ebd51))
+
+### Unknown
+
+* Merge pull request #26 from itzune/dev
+
+Process multiple po files from folder + more verbose ([`9f6bff7`](https://github.com/itzune/po2dataset/commit/9f6bff7c89e824fdeff6a940f779152a103e56d9))
+
+* change: Package description changed ([`04b7554`](https://github.com/itzune/po2dataset/commit/04b7554c5046d8718d19b7561506576c8d692a9e))
+
+
 ## v0.5.0 (2024-10-30)
 
 ### Features
