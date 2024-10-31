@@ -4,7 +4,7 @@ version = "0.3.1"
 authors = [
   {name = "Urtzi Odriozola", email = "urtzi.odriozola@gmail.com"},
 ]
-description = "Python tool to extract sentences from po files and create language datasets for NLP machine learning"
+description = "Python tool to extract sentences from po files and create language datasets for machine translation"
 readme = "README.md"
 license = {file = "LICENSE"}
 keywords = ["po", "dataset", "NLP", "argostranslate", "libretranslate", "language", "translation"]
