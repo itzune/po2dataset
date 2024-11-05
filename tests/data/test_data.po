@@ -17,6 +17,12 @@ msgstr "Kaixo Mundua!"
 msgid "This is a test po file"
 msgstr "Hau testerako po fitxategia da"
 
+msgid "Same text gettext string"
+msgstr "Same text gettext string"
+
+msgid "Empty translation string"
+msgstr ""
+
 msgid "Lets see if we can detect the %@ placeholder"
 msgstr "Ikus dezagun %@ aldagaia detekta dezakegun"
 
