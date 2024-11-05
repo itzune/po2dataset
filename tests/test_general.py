@@ -2,7 +2,7 @@ import unittest
 import os
 import shutil
 import json
-from po2dataset.po2dataset import (
+from po2dataset.utils import (
     create_workdir,
     create_dataset,
     create_metadata,
