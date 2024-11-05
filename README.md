@@ -8,7 +8,7 @@
 
 This command line tool is intended to create dataset packages suitable for [Argos Train](https://github.com/argosopentech/argos-train).
 
-## How to install
+## 🚀 How to install
 
 ### From pip
 
@@ -27,16 +27,19 @@ cd po2dataset
 source ./bin/activate
 ```
 
-## Quick start guide
+## 🏁 Quick start guide
 
 ### Create Argos Train suitable dataset
 
+You can create a dataset from a indibidual `.po` file or a bunch of files inside a directory. This tool supports a directory or file path as a `path` argument.
+
 ```bash
-po2dataset path/to/yourfile.po --name "MyProject" --source_code en --target_code eu --ref "Some reference information of the project"
+po2dataset path/to/locales --name "MyProject" --source_code en --target_code eu --ref "Some reference information of the project"
 ```
 
 Where:
 
+- `path`: Path to the .po files. Could be a single file or directory
 - `name`: The name of the project
 - `source_code`: Source language code ([ISO 639](https://en.wikipedia.org/wiki/ISO_639))
 - `target_code`: Target language code ([ISO 639](https://en.wikipedia.org/wiki/ISO_639))
@@ -67,6 +70,6 @@ po2dataset path/to/yourfile.po --name "MyProject" --source_code en --target_code
 
 These commands create language dataset packages, with zip file format and CC-BY licensing options.
 
-## Support
+## 🤗 Support
 
 Should you experience any issues do not hesistate to post an issue or contribute in this project pulling requests.
